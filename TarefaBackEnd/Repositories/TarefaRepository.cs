@@ -19,7 +19,7 @@ namespace TarefaBackEnd.Repositories
 
         public void Create(Tarefa tarefa)
         {
-            if (tarefa.Equals(null))
+            if (tarefa is null)
             {
                 tarefa.Id = new Guid();
                 Context.Tarefas.Add(tarefa);
