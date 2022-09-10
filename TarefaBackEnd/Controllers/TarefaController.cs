@@ -12,6 +12,8 @@ namespace TarefaBackEnd.Controllers
     [Route("tarefa")]
     public class TarefaController : ControllerBase
     {
+        private const string id = "{id}";
+
         [HttpGet]
         public IActionResult Get([FromServices] ITarefaRepository repository)
         {
@@ -26,6 +28,28 @@ namespace TarefaBackEnd.Controllers
                 return BadRequest();
 
             repository.Create(tarefa);
+
+            return Ok();
+        }
+
+        [HttpPut(id)]
+        public IActionResult Update(string id, [FromBody] Tarefa tarefa, [FromServices] ITarefaRepository repository)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            repository.Update(new Guid(id), tarefa);
+
+            return Ok();
+        }
+
+        [HttpDelete(id)]
+        public IActionResult Delete(string id, [FromServices] ITarefaRepository repository)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            repository.Delete(new Guid(id));
 
             return Ok();
         }

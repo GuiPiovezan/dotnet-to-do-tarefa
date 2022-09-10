@@ -19,7 +19,7 @@ namespace TarefaBackEnd.Repositories
 
         public void Create(Tarefa tarefa)
         {
-            if (tarefa is null)
+            if (!(tarefa is null))
             {
                 tarefa.Id = new Guid();
                 Context.Tarefas.Add(tarefa);
@@ -39,9 +39,13 @@ namespace TarefaBackEnd.Repositories
             return Context.Tarefas.ToList();
         }
 
-        public void Update(Tarefa tarefa)
+        public void Update(Guid id, Tarefa tarefa)
         {
-            var _tarefa = Context.Tarefas.Find(tarefa.Id);
+            var _tarefa = Context.Tarefas.Find(id);
+
+            _tarefa.Nome = tarefa.Nome;
+            _tarefa.Concluida = tarefa.Concluida;
+
             Context.Entry(_tarefa).State = EntityState.Modified;
             Context.SaveChanges();
         }

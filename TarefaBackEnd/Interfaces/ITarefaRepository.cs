@@ -11,6 +11,6 @@ namespace TarefaBackEnd.Interfaces
         List<Tarefa> Read();
         void Create(Tarefa tarefa);
         void Delete(Guid id);
-        void Update(Tarefa tarefa);
+        void Update(Guid id, Tarefa tarefa);
     }
 }
