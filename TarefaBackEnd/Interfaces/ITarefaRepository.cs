@@ -8,7 +8,7 @@ namespace TarefaBackEnd.Interfaces
 {
     public interface ITarefaRepository
     {
-        List<Tarefa> Read();
+        List<Tarefa> Read(Guid id);
         void Create(Tarefa tarefa);
         void Delete(Guid id);
         void Update(Guid id, Tarefa tarefa);

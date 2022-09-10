@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using TarefaBackEnd.Models;
 
 namespace TarefaBackEnd.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("tarefa")]
     public class TarefaController : ControllerBase
@@ -15,9 +17,11 @@ namespace TarefaBackEnd.Controllers
         private const string id = "{id}";
 
         [HttpGet]
+        // [AllowAnonymous] => não precisa de autorização para realizar a ação de leitura de tarefas
         public IActionResult Get([FromServices] ITarefaRepository repository)
         {
-            var tarefas = repository.Read();
+            var id = new Guid(User.Identity.Name);
+            var tarefas = repository.Read(id);
             return Ok(tarefas);
         }
 
@@ -26,6 +30,8 @@ namespace TarefaBackEnd.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
+
+            tarefa.UsuarioId = new Guid(User.Identity.Name);
 
             repository.Create(tarefa);
 
