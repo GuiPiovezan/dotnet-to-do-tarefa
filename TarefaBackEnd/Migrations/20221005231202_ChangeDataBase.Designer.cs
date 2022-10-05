@@ -10,8 +10,8 @@ using TarefaBackEnd.Repositories;
 namespace TarefaBackEnd.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221005211459_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221005231202_ChangeDataBase")]
+    partial class ChangeDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
