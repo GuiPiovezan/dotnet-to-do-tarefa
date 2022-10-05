@@ -21,12 +21,13 @@ namespace TarefaBackEnd
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -52,7 +53,8 @@ namespace TarefaBackEnd
                     };
                 });
 
-            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("DBTarefas"));
+            //services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("DBTarefas"));
+            services.AddDbContext<DataContext>(options =>  options.UseNpgsql(Configuration.GetConnectionString("Heroku")));
 
             services.AddTransient<ITarefaRepository, TarefaRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
